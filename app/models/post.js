@@ -10,6 +10,40 @@ const postSchema = new mongoose.Schema({
     required: true
   },
   tag: String,
+  comments: [{
+    text: String,
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    ikes: [{
+      liked: Boolean,
+      count: Number,
+      owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+      }
+    }],
+    comments: [{
+      text: String,
+      owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+      },
+      ikes: [{
+        liked: Boolean,
+        count: Number,
+        owner: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+          required: true
+        }
+      }]
+    }]
+  }],
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
