@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
 
+// Post will contain a question created by a signed-in user
+// Will have fields for comments made by other users (that can be threaded comments)
+// Tags will be used to filter a search by hashtags
 const postSchema = new mongoose.Schema({
   question: {
     type: String,
@@ -19,6 +22,7 @@ const postSchema = new mongoose.Schema({
     },
     ikes: [{
       liked: Boolean,
+      // how would `count` increase/decrease??
       count: Number,
       owner: {
         type: mongoose.Schema.Types.ObjectId,
@@ -35,6 +39,7 @@ const postSchema = new mongoose.Schema({
       },
       ikes: [{
         liked: Boolean,
+        // how would `count` increase/decrease??
         count: Number,
         owner: {
           type: mongoose.Schema.Types.ObjectId,
