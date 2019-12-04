@@ -19,25 +19,8 @@ const commentSchema = new mongoose.Schema({
     required: true
   },
   comments: [{
-    text: {
-      type: String,
-      required: true
-    },
-    owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true
-    },
-    ikes: [{
-      liked: Boolean,
-      // how would `count` increase/decrease??
-      count: Number,
-      owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-      }
-    }]
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment'
   }],
   timestamps: true
 })
