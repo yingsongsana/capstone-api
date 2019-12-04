@@ -47,7 +47,7 @@ router.get('/posts', (req, res, next) => {
 // GET /posts/5a7db6c74d55bc51bdf39793
 router.get('/posts/:id', (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
-  console.log(req.params)
+  // console.log(req.params)
   Post.findById(req.params.id)
     .then(handle404)
     // if `findById` is succesful, respond with 200 and "example" JSON
@@ -80,7 +80,7 @@ router.patch('/posts/:id', requireToken, removeBlanks, (req, res, next) => {
   // owner, prevent that by deleting that key/value pair
   delete req.body.post.owner
 
-  Post.findById(req.params._id)
+  Post.findById(req.params.id)
     .then(handle404)
     .then(post => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
@@ -99,7 +99,7 @@ router.patch('/posts/:id', requireToken, removeBlanks, (req, res, next) => {
 // DESTROY
 // DELETE /posts/5a7db6c74d55bc51bdf39793
 router.delete('/posts/:id', requireToken, (req, res, next) => {
-  Post.findById(req.params._id)
+  Post.findById(req.params.id)
     .then(handle404)
     .then(post => {
       // throw an error if current user doesn't own `post`
