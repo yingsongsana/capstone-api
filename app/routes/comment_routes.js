@@ -31,13 +31,17 @@ const router = express.Router()
 // INDEX
 // GET /comments
 router.get('/posts/:id/comments', (req, res, next) => {
-  Comment.find()
-    .then(comments => {
-      return comments.map(comment => comment.toObject())
+  Post.findById(req.params.id)
+    .populate('comments')
+    .then(post => {
+      res.status(200).json({ post: post.toObject() })
+      Comment.find()
+        .then(comments => {
+          return comments.map(comment => comment.toObject())
+        })
+        .then(comments => res.status(200).json({ comments }))
+        .catch(next)
     })
-    // respond with status 200 and JSON of the examples
-    .then(comments => res.status(200).json({ comments }))
-    // if an error occurs, pass it to the handler
     .catch(next)
 })
 
