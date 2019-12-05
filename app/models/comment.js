@@ -14,10 +14,20 @@ const commentSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
+    autopopulate: true
   }
 }, {
   timestamps: true
 })
+
+// commentSchema.virtual('username', {
+//   ref: 'User',
+//   foreignField: '_id',
+//   localField: 'username',
+//   justOne: true
+// })
+
+commentSchema.plugin(require('mongoose-autopopulate'))
 
 module.exports = mongoose.model('Comment', commentSchema)

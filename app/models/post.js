@@ -21,10 +21,13 @@ const postSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
+    autopopulate: true
   }
 }, {
   timestamps: true
 })
+
+postSchema.plugin(require('mongoose-autopopulate'))
 
 module.exports = mongoose.model('Post', postSchema)
