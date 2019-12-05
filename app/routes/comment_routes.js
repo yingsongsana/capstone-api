@@ -5,6 +5,7 @@ const passport = require('passport')
 
 // pull in Mongoose model for examples
 const Comment = require('../models/comment.js')
+const Post = require('../models/post')
 
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
@@ -29,7 +30,7 @@ const router = express.Router()
 
 // INDEX
 // GET /comments
-router.get('/comments', (req, res, next) => {
+router.get('/posts/:id/comments', (req, res, next) => {
   Comment.find()
     .then(comments => {
       return comments.map(comment => comment.toObject())
@@ -42,7 +43,7 @@ router.get('/comments', (req, res, next) => {
 
 // SHOW
 // GET /comments/5a7db6c74d55bc51bdf39793
-router.get('/comments/:id', (req, res, next) => {
+router.get('/posts/:id/comments/:commentId', (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
   Comment.findById(req.params.id)
     .then(handle404)
@@ -54,13 +55,19 @@ router.get('/comments/:id', (req, res, next) => {
 
 // CREATE
 // POST /comments
-router.post('/comments', requireToken, (req, res, next) => {
+router.post('/posts/:id/comments', requireToken, (req, res, next) => {
   // set owner of new example to be current user
   req.body.comment.owner = req.user._id
 
   Comment.create(req.body.comment)
     .then(comment => {
       res.status(201).json({ comment: comment.toObject() })
+      Post.findById(req.params.id)
+        .then(post => {
+          post.comments.push(comment)
+          post.save()
+        })
+        .catch(next)
     })
     // if an error occurs, pass it off to our error handler
     // the error handler needs the error message and the `res` object so that it
@@ -70,7 +77,7 @@ router.post('/comments', requireToken, (req, res, next) => {
 
 // UPDATE
 // PATCH /comments/5a7db6c74d55bc51bdf39793
-router.patch('/comments/:id', requireToken, removeBlanks, (req, res, next) => {
+router.patch('/posts/:id/comments/:commentId', requireToken, removeBlanks, (req, res, next) => {
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
   delete req.body.comment.owner
@@ -93,7 +100,7 @@ router.patch('/comments/:id', requireToken, removeBlanks, (req, res, next) => {
 
 // DESTROY
 // DELETE /comments/5a7db6c74d55bc51bdf39793
-router.delete('/comments/:id', requireToken, (req, res, next) => {
+router.delete('/posts/:id/comments/:commentId', requireToken, (req, res, next) => {
   Comment.findById(req.params.id)
     .then(handle404)
     .then(comment => {

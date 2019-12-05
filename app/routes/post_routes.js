@@ -49,9 +49,12 @@ router.get('/posts/:id', (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
   // console.log(req.params)
   Post.findById(req.params.id)
+    .populate('comments')
     .then(handle404)
     // if `findById` is succesful, respond with 200 and "example" JSON
-    .then(post => res.status(200).json({ post: post.toObject() }))
+    .then(post => {
+      res.status(200).json({ post: post.toObject() })
+    })
     // if an error occurs, pass it to the handler
     .catch(next)
 })

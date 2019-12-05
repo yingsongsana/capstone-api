@@ -9,19 +9,14 @@ const commentSchema = new mongoose.Schema({
     required: true
   },
   ikes: [{
-    liked: Boolean,
-    // how would `count` increase/decrease??
-    count: Number
+    type: Boolean
   }],
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  },
-  comments: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Comment'
-  }],
+  }
+}, {
   timestamps: true
 })
 
