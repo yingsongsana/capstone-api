@@ -54,19 +54,10 @@ Back-end:
 
 ### Unsolved Problems/Future Features
 
-For project submission, I had to abandon two user stories that I had planned on.
-
-* As a non-registered user, I want to be able to search for questions with matching tags.
-* As a signed-in user, I want to be able to “like” or “endorse/proceed with caution” on any comments.
-
-For features that came up during development that I thought would be very cool and add to the application.
-
-* Having an avatar available to users.
-* Real-time update for comments(spent a small part of an afternoon on my last day learning Socket.io. This would be a fun feature to tackle when I have more time!)
-* Having timestamps for questions and comments.
-* Having the option to upload a photo to questions a user posts (visually more appealing when browsing through all the questions).
-
-As for the biggest neglect for this submission: styling.
+Towards the end of the project, I found some issues that came with the autopopulating
+and throwing an incorrect ownership issue. Prior to the package I installed, I had
+originally planned on using virtuals schema. For future projects, I would have liked
+to utilized the virtuals more.
 
 
 ### ERD
