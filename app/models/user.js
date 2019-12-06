@@ -23,15 +23,8 @@ const userSchema = new mongoose.Schema({
     transform: (_doc, user) => {
       delete user.hashedPassword
       return user
-    },
-    virtuals: true
-  },
-  // virtuals are like serializers in Rails/ActiveRecord
-  toJSON: { virtuals: true }
-})
-
-userSchema.virtual('userName').get(function () {
-  return this.username
+    }
+  }
 })
 
 module.exports = mongoose.model('User', userSchema)
